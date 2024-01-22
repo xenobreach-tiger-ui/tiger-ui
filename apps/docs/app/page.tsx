@@ -1,38 +1,39 @@
 'use client';
 
-import { TigerElement } from '@tiger-ui/tiger-element';
+import React from 'react';
+import { createElement } from '@tiger-ui/react';
 
-export default function Page(): JSX.Element {
-  const BoxElement = new TigerElement<'a', { backgroundColor?: 'red' | 'blue' }>({
-    htmlElement: 'a',
-    style: {
-      backgroundColor: 'blue',
-    },
-  });
-
-  BoxElement.createProperty({
-    backgroundColor: [
+const Box = createElement<'a', { color?: 'red' | 'blue', backgroundColor?: string }>({
+  htmlElement: 'a',
+  style: {
+    backgroundColor: 'black',
+  },
+  props: {
+    color: [
       {
-        if: 'blue',
-        value: {
-          backgroundColor: 'blue',
+        value: 'blue',
+        style: (value) => ({
+          backgroundColor: value,
+          color: 'white',
+        }),
+      },
+      {
+        value: 'red',
+        style: {
+          color: 'red',
         },
         default: true,
       },
-      {
-        if: 'red',
-        value: {
-          backgroundColor: 'red',
-        },
-      },
     ],
-  });
+  },
+});
 
-  const Box = BoxElement.render();
-
+export default function Page(): JSX.Element {
   return (
-    <Box href="/" backgroundColor="red">
-      Hello from Box!
-    </Box>
+    <>
+      <Box href="/">
+        Hello from Box!
+      </Box>
+    </>
   );
 }

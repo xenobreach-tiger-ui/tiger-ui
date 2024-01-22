@@ -1,4 +1,4 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  transpilePackages: ["@repo/ui", "@tiger-ui/tiger-element"],
+  transpilePackages: ["@tiger-ui/react"],
 };
