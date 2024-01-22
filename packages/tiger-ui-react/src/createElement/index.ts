@@ -55,6 +55,7 @@ export class TigerElement<
   private style: Style<StyledTag<Tag>> = {};
   // - It holds the functions in the props values assigned to the Component and passes all style values during the rendering phase.
   private propsFunctions: PropsFunctions<StyledTag<Tag> & BaseProps> = [];
+
   // - Used to Create Custom Props for Components
   private createProperty(
     properties: Props<BaseProps, Tag>,
@@ -64,6 +65,17 @@ export class TigerElement<
     propertiesKeys.forEach((propertyKey) => {
       const property = properties[propertyKey];
 
+      /*
+      ** if the property took the following values:
+      **
+      ** example
+      {
+        property: (propValue, props) => ({
+          '...': propValue, 
+          ... // other css object values...
+        }),
+      }
+      */
       if (typeof property === 'function') {
         this.propsFunctions.push(
           (props): CSSObject => {
@@ -78,25 +90,25 @@ export class TigerElement<
       /*
       ** if the property took the following values:
       **
-      ** for example
-      ** size: [
-        {
-          value: 'small', // if size prop is small
-          style: {
-            width: '10px',
-            height: '10px',
+      ** example
+      {
+        property: [
+          {
+            value: '...',
+            style: {
+              ...
+            },
+            default: true, // optional...
           },
-          default: true, // optional...
-        },
-        {
-          value: 'large', // if size prop is large
-          style: {
-            width: '20px',
-            height: '20px',
-          },
-          default: false, // optional...
-        }
-      ]
+          {
+            value: '...',
+            style: {
+              ...
+            },
+            default: false, // optional...
+          }
+        ]
+      }
       */
       if (Array.isArray(property)) {
         /* 
